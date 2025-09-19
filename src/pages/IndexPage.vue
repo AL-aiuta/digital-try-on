@@ -1,43 +1,70 @@
 <template>
-  <q-page class="row items-center justify-evenly">
-    <example-component
-      title="Example component"
-      active
-      :todos="todos"
-      :meta="meta"
-    ></example-component>
+  <q-page class="q-pa-lg bg-grey-1">
+    <div class="page-container">
+      <div class="sku-grid">
+        <q-card
+          v-for="sku in skus"
+          :key="sku.id"
+          clickable
+          bordered
+          flat
+          class="sku-card column"
+        >
+          <q-img :src="sku.url" :ratio="2/3" contain loading="lazy" />
+          <q-card-actions>
+            <q-btn @click="tryOn(sku.id)" class="sku-card__btn" size="md" outline color="primary" label="Try on" no-caps />
+          </q-card-actions>
+          <q-card-section class="q-pt-none q-pl-sm q-pr-sm q-pb-sm">
+            <div class="sku-card__title">{{ sku.title }}</div>
+          </q-card-section>
+        </q-card>
+      </div>
+    </div>
   </q-page>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import type { Todo, Meta } from 'components/models';
-import ExampleComponent from 'components/ExampleComponent.vue';
+import { computed } from 'vue';
+import { useProductStore } from 'stores/product-store';
+import { aiuta } from 'boot/aiuta';
 
-const todos = ref<Todo[]>([
-  {
-    id: 1,
-    content: 'ct1',
-  },
-  {
-    id: 2,
-    content: 'ct2',
-  },
-  {
-    id: 3,
-    content: 'ct3',
-  },
-  {
-    id: 4,
-    content: 'ct4',
-  },
-  {
-    id: 5,
-    content: 'ct5',
-  },
-]);
+const productStore = useProductStore();
 
-const meta = ref<Meta>({
-  totalCount: 1200,
-});
+type Sku = { id: string; url: string; title: string };
+const skus = computed<Sku[]>(() => productStore.list);
+
+const tryOn = (skuId: string) => {
+
+  console.log(aiuta)
+  void aiuta.tryOn(skuId)
+}
 </script>
+
+<style scoped lang="scss">
+.sku-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 12px;
+  align-items: stretch; // все карточки по высоте равны
+}
+
+.sku-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%; // тянем на всю ячейку
+
+  &__title {
+    font-size: .75rem;
+    font-weight: 400;
+  }
+  & .q-card-actions {
+    margin-top: auto;
+  }
+  &__btn {
+    width: 100%;
+    font-size: 13px !important;
+    min-height: 2.25em;
+  }
+}
+
+</style>

@@ -17,6 +17,40 @@
     <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png" />
     <link rel="icon" type="image/ico" href="favicon.ico" />
+    <script src="https://static.aiuta.com/sdk/v0.0.95/index.umd.js"></script>
+
+    <script>
+      class Aiuta {
+        constructor(param) {}
+        tryOn(yourProductId) {}
+      }
+
+      var aiuta = new Aiuta({
+        auth: {
+          subscriptionId: 'your_subscription_id',
+          getJwt: async (params) => {
+            return 'JWT_from_your_backend';
+          }
+        },
+        userInterface: {
+          customCssUrl: 'url_to_custom_css',
+          iframeStyles: {
+            borderRadius: '12px',
+            top: '120px',
+            right: '18px'
+          }
+        },
+        analytics: {
+          handler: {
+            onAnalyticsEvent: (event) => {
+              console.log('Aiuta Event:', event);
+            }
+          }
+        }
+      });
+
+      aiuta.tryOn('your_product_id');
+    </script>
   </head>
   <body>
     <!-- quasar:entry-point -->

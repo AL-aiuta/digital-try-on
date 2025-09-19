@@ -12,7 +12,12 @@ export default defineConfig((ctx) => {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     // https://v2.quasar.dev/quasar-cli-vite/boot-files
-    boot: ['i18n', 'axios'],
+    boot: [
+      'i18n',
+      'axios',
+      'aiuta',
+      'webfontloader'
+    ],
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-file#css
     css: ['app.scss'],
@@ -27,7 +32,7 @@ export default defineConfig((ctx) => {
       // 'line-awesome',
       // 'roboto-font-latin-ext', // this or either 'roboto-font', NEVER both!
 
-      'roboto-font', // optional, you are not bound to it
+      // 'roboto-font', // optional, you are not bound to it
       'material-icons', // optional, you are not bound to it
     ],
 
@@ -51,9 +56,12 @@ export default defineConfig((ctx) => {
 
       // rebuildCache: true, // rebuilds Vite/linter/etc cache on startup
 
-      // publicPath: '/',
+      publicPath: '/digital-try-on/',
       // analyze: true,
-      // env: {},
+      env: {
+        VITE_AIUTA_SUBSCRIPTION_ID: '67dd38b436010676956bde8f',
+        VITE_AIUTA_JWT_URL: 'https://jwt-auth-backend-demo.aiuta.com/'
+      },
       // rawDefine: {}
       // ignorePublicFolder: true,
       // minify: false,
