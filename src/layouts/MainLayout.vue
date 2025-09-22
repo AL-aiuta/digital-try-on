@@ -19,4 +19,8 @@
 </template>
 
 <script setup lang="ts">
+import { useProductStore } from 'stores/product-store';
+
+const productStore = useProductStore();
+void productStore.fetchList()
 </script>

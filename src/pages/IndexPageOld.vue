@@ -21,23 +21,9 @@
     </q-card>
 
     <div class="text-subtitle2 q-mb-sm">Select SKU</div>
+    {{ skus }}
+
     <q-card flat bordered class="q-pa-md q-mb-lg">
-      <q-scroll-area visible class="sku-scroll">
-        <div class="row no-wrap q-gutter-sm q-pt-sm">
-          <q-card
-            v-for="sku in skus"
-            :key="sku.id"
-            clickable
-            bordered
-            flat
-            class="sku-card column items-center justify-center cursor-pointer"
-            :class="{ 'sku-selected': selectedSku?.id === sku.id }"
-            @click="selectedSku = sku"
-          >
-            <q-img :src="sku.url" :ratio="1" contain style="width: 160px; height: 160px" />
-          </q-card>
-        </div>
-      </q-scroll-area>
 
       <div class="row justify-center q-mt-md">
         <q-btn

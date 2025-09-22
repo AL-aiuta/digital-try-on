@@ -4,15 +4,15 @@
       <div class="sku-grid">
         <q-card
           v-for="sku in skus"
-          :key="sku.id"
+          :key="sku.sku_id"
           clickable
           bordered
           flat
           class="sku-card column"
         >
-          <q-img :src="sku.url" :ratio="2/3" contain loading="lazy" />
+          <q-img :src="sku.image_urls[0]" :ratio="2/3" contain loading="lazy" />
           <q-card-actions>
-            <q-btn @click="tryOn(sku.id)" class="sku-card__btn" size="md" outline color="primary" label="Try on" no-caps />
+            <q-btn @click="tryOn(sku.sku_id)" class="sku-card__btn" size="md" outline color="primary" label="Try on" no-caps />
           </q-card-actions>
           <q-card-section class="q-pt-none q-pl-sm q-pr-sm q-pb-sm">
             <div class="sku-card__title">{{ sku.title }}</div>
@@ -30,12 +30,9 @@ import { aiuta } from 'boot/aiuta';
 
 const productStore = useProductStore();
 
-type Sku = { id: string; url: string; title: string };
-const skus = computed<Sku[]>(() => productStore.list);
+const skus = computed(() => productStore.list);
 
 const tryOn = (skuId: string) => {
-
-  console.log(aiuta)
   void aiuta.tryOn(skuId)
 }
 </script>
