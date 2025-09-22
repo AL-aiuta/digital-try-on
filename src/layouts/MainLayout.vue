@@ -1,13 +1,14 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header elevated class="bg-white text-black">
+    <q-header class="bg-white text-black">
       <div class="page-container">
         <q-toolbar>
-          <q-toolbar-title>Digital try on</q-toolbar-title>
-
-          <div>
-            <q-img width="100px" src="~assets/logo.png" />
+          <div class="q-pl-sm">
+            <q-img width="107px" src="~assets/logo.png" />
           </div>
+          <q-space />
+
+          <div class="text-weight-medium q-pr-sm text-right text-subtitle1">Virtual Try-On</div>
         </q-toolbar>
       </div>
     </q-header>
