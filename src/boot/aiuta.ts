@@ -3,9 +3,14 @@
 import { boot } from 'quasar/wrappers';
 import { api } from 'boot/axios';
 
+// const AIUTA_UMD = 'https://static.aiuta.com/sdk/v0.0.95/index.umd.js'
+// const AIUTA_SUBSCRIPTION_ID = process.env.VITE_AIUTA_SUBSCRIPTION_ID as string;
+// const AIUTA_JWT_URL = process.env.VITE_AIUTA_JWT_URL as string
+
 const AIUTA_UMD = 'https://static.aiuta.com/sdk/v0.0.95/index.umd.js'
-const AIUTA_SUBSCRIPTION_ID = process.env.VITE_AIUTA_SUBSCRIPTION_ID as string;
-const AIUTA_JWT_URL = process.env.VITE_AIUTA_JWT_URL as string
+const AIUTA_SUBSCRIPTION_ID = '67dd38b436010676956bde8f'
+const AIUTA_JWT_URL = 'https://jwt-auth-backend-demo.aiuta.com/'
+
 
 declare global {
   interface Window {

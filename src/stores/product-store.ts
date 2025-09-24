@@ -16,12 +16,13 @@ export const useProductStore = defineStore('product', {
   actions: {
     async fetchList () {
       try {
+        if (!window.aiuta?.config?.skuItemsUrl) return
         const response = await api.get<ProductsApiResponse>(
-          'https://api.aiuta.com/digital-try-on/v1/sku_items/main',
+          window.aiuta.config.skuItemsUrl,
           {
             params: { limit: 50 },
             headers: {
-              'x-api-key': 'AIUTADEMO',
+              'x-api-key': window.aiuta.config.apiKey,
             },
           }
         );
@@ -29,7 +30,7 @@ export const useProductStore = defineStore('product', {
         console.log(response.data);
         this.list = response.data.result;
       } catch (error) {
-        console.error("Ошибка при запросе:", error);
+        console.error('Ошибка при запросе:', error);
       }
     }
   },

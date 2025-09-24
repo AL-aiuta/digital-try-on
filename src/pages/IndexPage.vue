@@ -33,14 +33,15 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useProductStore } from 'stores/product-store';
-import { aiuta } from 'boot/aiuta';
+// import { aiuta } from 'boot/aiuta';
 
 const productStore = useProductStore();
 
 const skus = computed(() => productStore.list);
 
 const tryOn = (skuId: string) => {
-  void aiuta.tryOn(skuId)
+  void window?.aiuta?.sdk.tryOn(skuId);
+  // void aiuta.tryOn(skuId)
 }
 </script>
 

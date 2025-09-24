@@ -17,39 +17,90 @@
     <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png" />
     <link rel="icon" type="image/ico" href="favicon.ico" />
-    <script src="https://static.aiuta.com/sdk/v0.0.95/index.umd.js"></script>
 
     <script>
-      class Aiuta {
-        constructor(param) {}
-        tryOn(yourProductId) {}
+      window.aiuta = window.aiuta || {};
+      window.aiuta.sdk = window.aiuta.sdk || null;
+
+      if (!window.aiuta.config) {
+        window.aiuta.config = {
+          webSdkUrl: "https://static.preprod.aiuta.com/sdk/main/index.umd.js",
+          subscriptionId: "67dd38b436010676956bde8f",
+          getJwtUrl: "https://jwt-auth-backend-demo.aiuta.com/",
+          customCssUrl: "/stylesheets/web-sdk.css",
+          skuItemsUrl: 'https://api.aiuta.com/digital-try-on/v1/sku_items/main',
+          apiKey: 'AIUTADEMO'
+        };
       }
 
-      var aiuta = new Aiuta({
-        auth: {
-          subscriptionId: 'your_subscription_id',
-          getJwt: async (params) => {
-            return 'JWT_from_your_backend';
-          }
-        },
-        userInterface: {
-          customCssUrl: 'url_to_custom_css',
-          iframeStyles: {
-            borderRadius: '12px',
-            top: '120px',
-            right: '18px'
-          }
-        },
-        analytics: {
-          handler: {
-            onAnalyticsEvent: (event) => {
-              console.log('Aiuta Event:', event);
+      function loadWebSdk() {
+        return new Promise((resolve, reject) => {
+
+          const cdnScript = document.createElement('script');
+          cdnScript.src = window.aiuta.config.webSdkUrl;
+          cdnScript.onload = () => {
+            console.log('Loaded Aiuta SDK from CDN');
+            resolve();
+          };
+          cdnScript.onerror = () => {
+            reject(new Error('Failed to load Aiuta SDK from CDN'));
+          };
+          document.head.appendChild(cdnScript);
+        })
+      }
+
+      async function initWebSdk() {
+        if (window.aiuta.sdk) {
+          console.log('Aiuta SDK already initialized');
+          return;
+        }
+
+        await loadWebSdk();
+
+        window.aiuta.sdk = new Aiuta({
+          auth: {
+            subscriptionId: window.aiuta.config.subscriptionId,
+            getJwt: async (params) => {
+              console.log('getJwt() called with params:', params);
+              const response = await fetch(window.aiuta.config.getJwtUrl, {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(params)
+              });
+              const data = await response.json();
+              const token = data.token;
+              console.log('JWT resolved');
+              return token;
+            }
+          },
+          userInterface: {
+            customCssUrl: window.aiuta.config.customCssUrl,
+            iframeStyles: {
+              borderRadius: "12px",
+              top: "12px",
+              right: "18px"
+            }
+          },
+          analytics: {
+            handler: {
+              onAnalyticsEvent: (event) => {
+                console.log('Aiuta Analytics Event:', event);
+              }
             }
           }
-        }
-      });
+        });
 
-      aiuta.tryOn('your_product_id');
+        console.log('Aiuta SDK initialized');
+      }
+
+      window.onload = async () => {
+        // Only initialize if not already done
+        if (!window.aiuta.sdk) {
+          await initWebSdk();
+        }
+      }
     </script>
   </head>
   <body>

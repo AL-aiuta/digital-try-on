@@ -15,8 +15,8 @@ export default defineConfig((ctx) => {
     boot: [
       'i18n',
       'axios',
-      'aiuta',
-      'webfontloader'
+      // 'aiuta',
+      'webfontloader',
     ],
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-file#css
@@ -56,11 +56,12 @@ export default defineConfig((ctx) => {
 
       // rebuildCache: true, // rebuilds Vite/linter/etc cache on startup
 
-      publicPath: '/digital-try-on/',
+      publicPath: '/public_event_assets/',
+      // publicPath: '/digital-try-on/',
       // analyze: true,
       env: {
         VITE_AIUTA_SUBSCRIPTION_ID: '67dd38b436010676956bde8f',
-        VITE_AIUTA_JWT_URL: 'https://jwt-auth-backend-demo.aiuta.com/'
+        VITE_AIUTA_JWT_URL: 'https://jwt-auth-backend-demo.aiuta.com/',
       },
       // rawDefine: {}
       // ignorePublicFolder: true,
